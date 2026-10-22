@@ -1,16 +1,11 @@
-ILDIKÓ VILÁGA – statikus weboldal első változat
+Ildikó Világa – v5 mobilos finomítás
 
-GitHub + Vercel:
-1. Hozz létre külön GitHub repositoryt, például ildiko-vilaga.
-2. Töltsd fel az index.html fájlt a repository gyökerébe.
-3. Vercelben importáld ezt a repositoryt. Framework preset: Other; Build Command: üres; Output Directory: üres vagy ./
-4. A Vercel preview címen ellenőrizd, mielőtt domaint kötsz hozzá.
+A csomag tartalma: index.html és assets/ildiko.jpg.
 
-Még behelyettesítendő:
-- Ildikó valódi bemutatkozása és portréja
-- TikTok profil URL-je és a valódi videólinkek
-- Instagram/YouTube linkek, ha kellenek
-- Kapcsolati e-mail
-- A helykitöltő képek cseréje saját vagy jogtisztán használható képekre
+A mobilos frissítések:
+- nagyobb térköz a portré és a „Legújabb videók” szekció között;
+- a videós szekció címe és a „Összes videó megtekintése” link egymás alatt, tisztán tördelve jelenik meg;
+- mobilon a videókártyák egy oszlopban jelennek meg;
+- a korábbi működő mobilmenü és az elfogadott dizájn változatlan marad.
 
-Az oldal statikus, nem használ adatbázist, API-t vagy külső JavaScript-könyvtárat.
+Telepítés: a ZIP tartalmát töltsd fel a GitHub-projekt gyökerébe a meglévő index.html és assets mappa helyére. A Vercel új deploymentet készít.
