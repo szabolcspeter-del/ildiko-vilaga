@@ -10,7 +10,9 @@
 :root{--cream:#f7f0eb;--paper:#fffaf6;--rose:#f0ded8;--wine:#701427;--wine2:#4e101d;--ink:#332a29;--muted:#756967;--line:#e8d8d1}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}
 a{color:inherit;text-decoration:none}.serif{font-family:Georgia,"Times New Roman",serif}
-header{height:76px;padding:0 4.2%;display:flex;align-items:center;justify-content:space-between;background:#fbf6f2;border-bottom:1px solid var(--line);gap:24px}
+header{height:76px;padding:0 4.2%;display:flex;align-items:center;justify-content:space-between;background:#fbf6f2;border-bottom:1px solid var(--line);gap:24px;position:relative;z-index:10}
+.menu-toggle{display:none;border:1px solid var(--line);background:transparent;color:var(--wine);width:42px;height:42px;border-radius:50%;font-size:25px;line-height:1;align-items:center;justify-content:center;cursor:pointer}
+nav a{padding:8px 0}
 .logo{font-family:Georgia,serif;color:var(--wine);font-size:29px;white-space:nowrap}.logo em{font-style:italic;font-weight:400}
 nav{display:flex;gap:27px;font-size:11px;letter-spacing:.07em;text-transform:uppercase}nav a:hover{color:var(--wine)}
 .social{display:flex;align-items:center;gap:15px;color:var(--wine);font-size:12px;font-weight:bold}
@@ -51,11 +53,14 @@ footer{padding:20px 4.2%;border-top:1px solid var(--line);display:flex;justify-c
 .note{font-size:10px;color:#8d7d78}
 @media(max-width:900px){header{padding:0 22px}.social .social-icon{display:none}nav{gap:13px}.hero{grid-template-columns:1fr 1fr}.hero-copy{padding:36px 7%}.videos{grid-template-columns:1fr}.about-card{max-width:none}.collab{grid-template-columns:30% 70%}.stats{grid-column:1/-1}.lower{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(5,1fr)}}
 @media(max-width:620px){
-header{height:auto;min-height:70px;flex-wrap:wrap;padding:14px 20px;gap:10px}
+header{height:auto;min-height:70px;flex-wrap:nowrap;padding:12px 20px;gap:12px}
 .logo{font-size:25px}
-nav{order:3;width:100%;justify-content:flex-start;gap:20px;overflow-x:auto;white-space:nowrap;font-size:10px;padding:10px 0 2px;scrollbar-width:none}
-nav::-webkit-scrollbar{display:none}
-.social{margin-left:auto}.social .follow{display:none}
+.menu-toggle{display:flex;margin-left:auto;flex:0 0 42px}
+nav{display:none;position:absolute;top:100%;left:0;right:0;width:100%;order:initial;background:#fbf6f2;border-bottom:1px solid var(--line);padding:10px 20px 16px;gap:0;flex-direction:column;white-space:normal;font-size:12px;letter-spacing:.06em;box-shadow:0 12px 18px #4e101d12}
+nav.is-open{display:flex}
+nav a{display:block;padding:13px 2px;border-bottom:1px solid var(--line)}
+nav a:last-child{border-bottom:0}
+.social{display:none}
 .hero{grid-template-columns:1fr;min-height:0}
 .hero-copy{padding:38px 25px 30px}
 .hero-copy h1{font-size:clamp(42px,11vw,54px);line-height:1.02}
@@ -88,7 +93,8 @@ footer{padding:18px 20px;flex-direction:column}
 <body>
 <header>
   <a class="logo" href="#fooldal">Ildikó <em>Világa</em></a>
-  <nav aria-label="Fő navigáció"><a href="#fooldal">Főoldal</a><a href="#videok">Videók</a><a href="#rolam">Rólam</a><a href="#egyuttmukodes">Együttműködés</a><a href="#kapcsolat">Kapcsolat</a></nav>
+  <button class="menu-toggle" type="button" aria-label="Menü megnyitása" aria-expanded="false" aria-controls="main-nav">☰</button>
+  <nav id="main-nav" aria-label="Fő navigáció"><a href="#fooldal">Főoldal</a><a href="#videok">Videók</a><a href="#rolam">Rólam</a><a href="#egyuttmukodes">Együttműködés</a><a href="#kapcsolat">Kapcsolat</a></nav>
   <div class="social"><a class="social-icon" href="https://www.tiktok.com/@ildikovilaga" target="_blank" rel="noopener noreferrer" aria-label="Ildikó TikTok-profilja">♪</a><a class="social-icon" href="https://www.tiktok.com/@ildikovilaga" target="_blank" rel="noopener noreferrer" aria-label="Ildikó TikTok-profilja">◎</a><a class="social-icon" href="https://www.tiktok.com/@ildikovilaga" target="_blank" rel="noopener noreferrer" aria-label="Ildikó TikTok-profilja">▶</a><a class="btn follow" href="https://www.tiktok.com/@ildikovilaga" target="_blank" rel="noopener noreferrer">♪ &nbsp; Kövess TikTokon</a></div>
 </header>
 <main>
@@ -142,4 +148,25 @@ footer{padding:18px 20px;flex-direction:column}
 </main>
 <footer><span>© <span id="year">2026</span> Ildikó Világa</span><span>Készülő személyes oldal · TikTok-központú bemutatkozás</span></footer>
 <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+<script>
+(() => {
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('#main-nav');
+  if (!toggle || !nav) return;
+  const closeMenu = () => {
+    nav.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'Menü megnyitása');
+    toggle.textContent = '☰';
+  };
+  toggle.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Menü bezárása' : 'Menü megnyitása');
+    toggle.textContent = open ? '×' : '☰';
+  });
+  nav.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+  window.addEventListener('resize', () => { if (window.innerWidth > 620) closeMenu(); });
+})();
+</script>
 </body></html>
